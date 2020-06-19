@@ -30,6 +30,10 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/consignment/{id:[0-9]+}", a.DeleteConsignmentByID).Methods("DELETE")
 	a.Router.HandleFunc("/consignments", a.InsertConsignmentsFromCSV).Methods("POST")
 
+	//van handlers
+	a.Router.HandleFunc("/van", a.GetVanIDForDestination).Methods("POST")
+
+
 	// Swagger
 	a.Router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 
