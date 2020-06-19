@@ -18,7 +18,6 @@ func main() {
 
 	//app run
 	a := handlers.App{}
-
 	a.Initialize("postgres", "djale12345", "postgres")
 	a.Run(":8080")
 
