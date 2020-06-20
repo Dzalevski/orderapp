@@ -11,14 +11,14 @@ import (
 )
 
 
-// GetOrder godoc
-// @Summary Get details of all orders
-// @Description Get details of all orders
-// @Tags orders
+// GetCustomerByID godoc
+// @Summary Get details of customer by id
+// @Description Get details of customer by id
+// @Tags customers
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} Order
-// @Router /orders [get]
+// @Success 200 {object} Customer
+// @Router /customer/{id} [get]
 func (a *App) GetCustomerByID(w http.ResponseWriter, r *http.Request) {
 
 	customer := &entities.Customers{}
