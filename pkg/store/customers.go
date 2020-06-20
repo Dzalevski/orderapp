@@ -31,7 +31,7 @@ func (s *CustomerStoreImpl) GetCustomerByID(id int) (*entities.Customers, error)
 	var cust entities.Customers
 
 	err := s.db.QueryRow("SELECT id,name,address, postcode,geo_location FROM customers WHERE id=$1",
-		id).Scan(&cust.Name, &cust.Address, &cust.Postcode, &cust.GeoLocation)
+		id).Scan(&cust.ID, &cust.Name, &cust.Address, &cust.Postcode, &cust.GeoLocation)
 	if err != nil {
 		return nil, errors.New("failed to get customer by id")
 	}

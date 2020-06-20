@@ -31,7 +31,7 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/consignments", a.InsertConsignmentsFromCSV).Methods("POST")
 
 	//van handlers
-	a.Router.HandleFunc("/van", a.GetVanIDForDestination).Methods("POST")
+	a.Router.HandleFunc("/van", a.GetVanIDForDestination).Methods("GET")
 
 	//order handlers
 	a.Router.HandleFunc("/order/{order_id:[0-9]+}", a.GetVansForOrderID).Methods("POST")
