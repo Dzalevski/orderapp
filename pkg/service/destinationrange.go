@@ -1,6 +1,7 @@
 package service
 
 import (
+	"djale/pkg/entities"
 	"djale/pkg/store"
 	"errors"
 	geo "github.com/kellydunn/golang-geo"
@@ -11,13 +12,17 @@ type DestinationService interface {
 
 // CustomerStoreImpl is the concrete implementation of the CustomerStore interface.
 type DestinationServiceImpl struct {
-	VanStore store.VanStore
+	VanStore      store.VanStore
+	OrderStore    store.OrderStore
+	CustomerStore store.CustomerStore
 }
 
 // NewCustomerStore returns an instance of CustomerStore.
-func NewDestinationService(vanStore store.VanStore) *DestinationServiceImpl {
+func NewDestinationService(vanStore store.VanStore, orderStore store.OrderStore, customerStore store.CustomerStore) *DestinationServiceImpl {
 	return &DestinationServiceImpl{
-		VanStore: vanStore,
+		VanStore:      vanStore,
+		OrderStore:    orderStore,
+		CustomerStore: customerStore,
 	}
 }
 
@@ -41,5 +46,33 @@ func (s *DestinationServiceImpl) GetDestinationBetweenTwoPoints(latitude float64
 		}
 	}
 	return vanID, nil
+
+}
+
+// for oder id u get slice of van ids that are okay for transferring the order
+func (s *DestinationServiceImpl) WhichVanForCustomerOrder(orderID int) (*entities.VanRunResponse, error) {
+
+	var validVans []int
+	var resp entities.VanRunResponse
+
+	order, err := s.OrderStore.GetOrderByID(orderID)
+	if err != nil {
+		return nil, err
+	}
+
+	customer, err := s.CustomerStore.GetCustomerByID(order.CustomerID)
+	if err != nil {
+		return nil, err
+	}
+	validVanID, err := s.GetDestinationBetweenTwoPoints(customer.Latitude, customer.Longitude)
+	if err != nil {
+		return nil, err
+	}
+	validVans = append(validVans, validVanID)
+
+	resp.ConsID = order.ConsID
+	resp.VanIDs = validVans
+
+	return &resp, nil
 
 }

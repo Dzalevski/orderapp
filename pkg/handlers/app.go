@@ -33,6 +33,10 @@ func (a *App) initializeRoutes() {
 	//van handlers
 	a.Router.HandleFunc("/van", a.GetVanIDForDestination).Methods("POST")
 
+	//order handlers
+	a.Router.HandleFunc("/order/{order_id:[0-9]+}", a.GetVansForOrderID).Methods("POST")
+
+
 
 	// Swagger
 	a.Router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
