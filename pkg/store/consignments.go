@@ -9,6 +9,10 @@ import (
 )
 
 type ConsignmentsStore interface {
+	GetConsignmentByID(id int) (*entities.Consignment, error)
+	DeleteConsignmentByID(id int) error
+	InsertConsignment(barcode string, linkToSupplier string, ) error
+	UpdateConsignmentByID(barcode string, linkToSupplier string, id int) error
 }
 
 // CustomerStoreImpl is the concrete implementation of the CustomerStore interface.

@@ -7,6 +7,7 @@ import (
 )
 
 type VanStore interface {
+	GetAllVans() ([]entities.Van, error)
 }
 
 // CustomerStoreImpl is the concrete implementation of the CustomerStore interface.
