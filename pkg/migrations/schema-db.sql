@@ -23,4 +23,18 @@ CREATE TABLE van
     latitude double precision,
     longitude double precision,
     CONSTRAINT "Van_pkey" PRIMARY KEY (id)
+);
+
+CREATE TABLE van_run
+(
+    van_id integer,
+    cons_id integer,
+    CONSTRAINT cons_id FOREIGN KEY (van_id)
+        REFERENCES consignments (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT van_id FOREIGN KEY (van_id)
+        REFERENCES van (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 )
